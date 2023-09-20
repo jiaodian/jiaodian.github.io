@@ -1,0 +1,231 @@
+<html>
+
+<head>
+	<link rel="icon" href="data:;base64,=">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="referrer" content="never">
+	<meta name="referrer" content="no-referrer">
+	<title>添加老师微信</title>
+	<script src="https://lib.eqh5.com/jquery/2.0.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			margin: 0 auto;
+		}
+
+		.layout {
+			width: 100%;
+			height: 50%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 0 auto;
+		}
+
+		.title {
+			font-size: 17px;
+			color: #242627;
+			margin-top: 16px;
+			line-height: var(--chakra-lineHeights-base);
+			user-select: auto;
+		}
+
+		.layout1 {
+			width: 100%;
+			height: 50%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			align-items: center;
+			margin: 0 auto;
+		}
+
+		.img-box {
+			width: 64px;
+			height: 64px;
+		}
+
+		.icom_img {
+			width: 16px;
+			height: 16px;
+		}
+
+		.icon_text {
+			font-size: 14px;
+			color: #C5C5C5;
+			margin-left: 8px;
+			font-weight: 320;
+		}
+
+		.heand_img {
+			width: auto;
+			height: auto;
+			max-width: 100%;
+			max-height: 100%;
+			position: relative;
+			border-radius: 5px;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%)
+		}
+
+		.text_g {
+			font-size: 14px;
+			color: rgba(0, 0, 0, 0.5);
+		}
+
+		.text_link {
+			font-size: 14px;
+			transition: all 0.15s ease-out 0s;
+			cursor: pointer;
+			text-decoration: none;
+			outline: none;
+			color: rgb(108, 125, 162);
+		}
+
+		.jumpBtn {
+			display: inline-flex;
+			-webkit-box-align: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			justify-content: center;
+			transition: all 250ms ease 0s;
+			border-radius: 5px;
+			border: 0;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			width: 184px;
+			font-size: 16px;
+			color: #fff;
+			line-height: 1.2;
+			min-height: 40px;
+			font-weight: 700;
+			padding-left: 24px;
+			padding-right: 24px;
+			background-color: #07c160;
+		}
+	</style>
+	<div class="layout">
+		<div class="img-box">
+			<img class="heand_img"
+				src="https://mmbiz.qpic.cn/mmbiz_png/n9HqaCW5QooAfGnbPYuR3nLnJNEfLn4Oo8jrVO2OYc7pGic49fqW9vZkyicFJdtbVmS5hw6clicEbl4zKGug4nicOg/0?wx_fmt=png">
+		</div>
+		<a class="title">老师咨询页面</a>
+		<div
+			style="margin-top: 4px;flex-direction: row; margin-top: 8px; overflow:hidden; display: flex;justify-content: center; align-items: center;">
+			<img class="icom_img"
+				src="https://mmbiz.qpic.cn/mmbiz_png/n9HqaCW5QooAfGnbPYuR3nLnJNEfLn4Og7gLzTLVXKiavicn8iabnTCsib3uLjIUmV2E0CnPRKV9gGkw5VajU02SHw/0?wx_fmt=png">
+			<a class="icon_text">微信</a>
+		</div>
+	</div>
+	<div class="layout1">
+		<button class="jumpBtn" type="button" onclick="onJumpWxBtn()">前往微信打开</button>
+		<div style="margin-top: 24px; margin-bottom: 100px;overflow:hidden">
+			<a class="text_g">无法打开时，可使用默认浏览器打开。</a>
+			<c style="position:absolute; left: 0px;top: 0px;font-size: 0px; ">aasdf</c>
+			<a class="text_link" onclick="copy()">复制链接</a>
+		</div>
+	</div>
+	<img class="fullScreen" style="width: 100%; height: auto; position:absolute; left: 0px;top: 0px; display: none;"
+		onclick="onJumpWxBtn()">
+
+	<script>
+		document.getElementsByTagName("c")[0].innerHTML = window.location.href;
+		function copy() {
+			copyArticle(document.getElementsByTagName("c")[0])
+			alert('复制成功')
+		}
+		function copyArticle(dom) {
+			const range = document.createRange();
+			range.selectNode(dom);
+			const selection = window.getSelection();
+			if (selection.rangeCount > 0) selection.removeAllRanges();
+			selection.addRange(range);
+			document.execCommand('copy');
+		}
+
+		function GetQuery(key) {
+			var search = location.search.slice(1); 
+			var arr = search.split("&");
+			for (var i = 0; i < arr.length; i++) {
+				var ar = arr[i].split("=");
+				if (ar[0] == key) {
+					return ar[1];
+				}
+			}
+		}
+
+		onJumpWxBtn()
+		function onJumpWxBtn() {
+			$.get("https://xcx.sa4.cn/api/douyin2wx/xcx_825?uid=" + GetQuery('u'), function (data, status) {
+
+				addMeta(
+					'description',
+					data.card_desc,
+				);
+				addMeta2(
+					'icon',
+					data.card_img,
+				);
+				addMeta2(
+					'shortcut icon',
+					data.card_img,
+				);
+				document.title = data.card_title;
+
+				$.ajax({
+					url: 'https://xcx.sa4.cn/openapi/dy2wx/geturl/id/' + data.id + '?path=pages/main/main?uid=' + GetQuery('u'),
+					data: {},
+					success: function (a) {
+						a.xcxurl ? window.location.href = a.xcxurl : $(".public-container")
+							.html('<img class="error-images" src="https://mmbiz.qpic.cn/mmbiz_png/n9HqaCW5QopGZp7nLWicFx1Km8wy4wicEic1UfXQicZtYPdsC443jcEh03QXKJdpX44fejYVvpdz0W2V0WRsj6tA5A/0?wx_fmt=png"><p class="error-msg">' + a.msg + "</p>")
+					}
+				})
+			});
+		}
+
+		document.body.addEventListener('touchmove', function (e) {
+			e.preventDefault()
+		}, {
+			passive: false
+		})
+
+		const addMeta = (name, content) => {
+			const meta = document.createElement('meta');
+			meta.name = name;
+			meta.content = content;
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		};
+
+		const addMeta2 = (name, content) => {
+			const meta = document.createElement('link');
+			meta.rel = name;
+			meta.href = content;
+			document.getElementsByTagName('head')[0].appendChild(meta);
+		};
+
+		function alert(tip = '成功', istz = 0) {
+			$("#alert_tip")["remove"]()
+			$("body").append('<div id="alert_tip" style="margin: 0; top: 45%;z-index: 2000;position: fixed; width: 6.6em;left: 0;right:0;margin:0 auto; background: hsla(0,0%,7%,.7); text-align: center;border-radius: 5px;color: #fff;padding:5px">' + tip + '</div>');
+			setTimeout(function () {
+				$('#alert_tip').hide();
+				if (istz) window.location.reload(true);
+			}, 1200);
+
+		}
+	</script>
+</body>
+</html>
